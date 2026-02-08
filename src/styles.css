@@ -1,0 +1,277 @@
+/* Inbox Processor Plugin Styles */
+
+.inbox-processor-container {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header */
+.inbox-processor-header {
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.inbox-processor-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.inbox-processor-title-row h4 {
+  margin: 0;
+  flex: 1;
+}
+
+.inbox-processor-count {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.inbox-processor-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inbox-processor-btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-muted);
+}
+
+.inbox-processor-btn-icon:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.inbox-processor-select-all {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Empty state */
+.inbox-processor-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 40px 20px;
+}
+
+.inbox-processor-empty-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Note list */
+.inbox-processor-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Note card */
+.inbox-processor-card {
+  padding: 8px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+}
+
+.inbox-processor-card.is-selected {
+  border-color: var(--interactive-accent);
+  background: var(--background-primary-alt);
+}
+
+.inbox-processor-card-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.inbox-processor-card-title {
+  flex: 1;
+  font-weight: 500;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inbox-processor-card-title:hover {
+  color: var(--text-accent);
+}
+
+/* Recommendations */
+.inbox-processor-recs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 4px 0 4px 22px;
+}
+
+.inbox-processor-rec-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.82em;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.inbox-processor-rec-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.inbox-processor-rec-icon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.inbox-processor-rec-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inbox-processor-rec-badge {
+  flex-shrink: 0;
+  font-size: 0.75em;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.inbox-processor-rec-badge.high {
+  background: var(--color-green);
+  color: var(--text-on-accent);
+}
+
+.inbox-processor-rec-badge.medium {
+  background: var(--color-yellow);
+  color: var(--background-primary);
+}
+
+.inbox-processor-rec-badge.low {
+  background: var(--background-modifier-border);
+  color: var(--text-muted);
+}
+
+/* Manual folder picker button */
+.inbox-processor-manual-btn {
+  margin: 2px 0 0 22px;
+  font-size: 0.82em;
+  color: var(--text-faint);
+  background: none;
+  border: 1px dashed var(--background-modifier-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.inbox-processor-manual-btn:hover {
+  color: var(--text-muted);
+  border-color: var(--text-muted);
+}
+
+/* Warnings */
+.inbox-processor-warnings {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 0 22px;
+  font-size: 0.78em;
+  color: var(--color-orange);
+}
+
+.inbox-processor-warn-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* Action bar */
+.inbox-processor-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-top: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  border-radius: 0 0 6px 6px;
+  flex-wrap: wrap;
+}
+
+.inbox-processor-selected-count {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin-right: auto;
+}
+
+.inbox-processor-batch-btn {
+  font-size: 0.85em;
+}
+
+.inbox-processor-batch-pick-btn {
+  font-size: 0.85em;
+}
+
+/* Batch confirm modal */
+.inbox-processor-batch-modal {
+  max-width: 500px;
+}
+
+.inbox-processor-batch-summary {
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.inbox-processor-batch-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 0.9em;
+}
+
+.inbox-processor-batch-table th {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.inbox-processor-batch-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.inbox-processor-batch-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
