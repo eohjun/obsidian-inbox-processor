@@ -16,7 +16,7 @@ export class RuleBasedFolderClassifier implements IFolderClassifier {
     private maxRecommendations: number,
   ) {}
 
-  classify(note: InboxNote): FolderRecommendation[] {
+  async classify(note: InboxNote): Promise<FolderRecommendation[]> {
     const text = `${note.basename} ${note.content.slice(0, 500)}`;
     const results: FolderRecommendation[] = [];
     const seen = new Set<string>();

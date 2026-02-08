@@ -4,10 +4,12 @@ import { AnalyzeNoteUseCase } from './analyze-note';
 export class BatchAnalyzeUseCase {
   constructor(private analyzeNote: AnalyzeNoteUseCase) {}
 
-  execute(notes: InboxNote[]): InboxNote[] {
-    return notes.map((note) => ({
-      ...note,
-      analysis: this.analyzeNote.execute(note),
-    }));
+  async execute(notes: InboxNote[]): Promise<InboxNote[]> {
+    const results: InboxNote[] = [];
+    for (const note of notes) {
+      const analysis = await this.analyzeNote.execute(note);
+      results.push({ ...note, analysis });
+    }
+    return results;
   }
 }

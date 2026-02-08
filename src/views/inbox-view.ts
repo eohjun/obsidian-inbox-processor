@@ -68,7 +68,7 @@ export class InboxProcessorView extends ItemView {
           new KeywordExtractor(),
         );
         const batchAnalyze = new BatchAnalyzeUseCase(analyzeUseCase);
-        this.notes = batchAnalyze.execute(rawNotes);
+        this.notes = await batchAnalyze.execute(rawNotes);
       } else {
         this.notes = rawNotes;
       }

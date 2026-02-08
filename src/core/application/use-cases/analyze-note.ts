@@ -11,7 +11,7 @@ export class AnalyzeNoteUseCase {
     private keywordExtractor: KeywordExtractor,
   ) {}
 
-  execute(note: InboxNote): NoteAnalysis {
+  async execute(note: InboxNote): Promise<NoteAnalysis> {
     // 1. Extract keywords
     const keywords = this.keywordExtractor.extract(
       note.basename,
@@ -20,7 +20,7 @@ export class AnalyzeNoteUseCase {
     );
 
     // 2. Classify → folder recommendations
-    const recommendations = this.classifier.classify(note);
+    const recommendations = await this.classifier.classify(note);
 
     // 3. Build frontmatter checklist
     const checklist = this.buildChecklist(note.frontmatter);
