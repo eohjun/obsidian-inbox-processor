@@ -46,7 +46,7 @@ export const AI_PROVIDERS: Record<AIProviderType, AIProviderConfig> = {
     id: 'claude',
     name: 'Anthropic Claude',
     displayName: 'Claude',
-    defaultModel: 'claude-sonnet-4-5-20250929',
+    defaultModel: 'claude-sonnet-4-6',
     endpoint: 'https://api.anthropic.com/v1',
   },
   gemini: {
@@ -60,7 +60,7 @@ export const AI_PROVIDERS: Record<AIProviderType, AIProviderConfig> = {
     id: 'openai',
     name: 'OpenAI',
     displayName: 'OpenAI',
-    defaultModel: 'gpt-4o-mini',
+    defaultModel: 'gpt-5-nano',
     endpoint: 'https://api.openai.com/v1',
   },
 };
