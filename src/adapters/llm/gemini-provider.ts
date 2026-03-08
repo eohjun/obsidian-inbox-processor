@@ -1,3 +1,7 @@
+/**
+ * Gemini Provider — 공유 빌더/파서 사용
+ */
+
 import {
   BaseProvider,
   AIMessage,
@@ -5,12 +9,7 @@ import {
   AIProviderResponse,
   AIProviderType,
 } from './base-provider';
-
-interface GeminiResponse {
-  candidates: { content: { parts: { text: string }[] } }[];
-  usageMetadata?: { promptTokenCount: number; candidatesTokenCount: number };
-  error?: { message: string; code: number };
-}
+import { buildGeminiBody, parseGeminiResponse, getGeminiGenerateUrl } from 'obsidian-llm-shared';
 
 export class GeminiProvider extends BaseProvider {
   readonly id: AIProviderType = 'gemini';
@@ -18,20 +17,19 @@ export class GeminiProvider extends BaseProvider {
 
   async testApiKey(apiKey: string): Promise<boolean> {
     try {
-      const model = this.config.defaultModel;
-      const url = `${this.config.endpoint}/models/${model}:generateContent?key=${apiKey}`;
-
-      const response = await this.makeRequest<GeminiResponse>({
+      const body = buildGeminiBody(
+        [{ role: 'user', content: 'Hello' }],
+        this.config.defaultModel,
+        { maxTokens: 10 }
+      );
+      const url = getGeminiGenerateUrl(this.config.defaultModel, apiKey, this.config.endpoint);
+      const json = await this.makeRequest<Record<string, unknown>>({
         url,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: 'Hello' }] }],
-          generationConfig: { maxOutputTokens: 10 },
-        }),
+        body: JSON.stringify(body),
       });
-
-      return !response.error && !!response.candidates && response.candidates.length > 0;
+      return parseGeminiResponse(json).success;
     } catch {
       return false;
     }
@@ -42,78 +40,34 @@ export class GeminiProvider extends BaseProvider {
     apiKey: string,
     options?: AIRequestOptions,
   ): Promise<AIProviderResponse> {
-    const model = options?.model || this.config.defaultModel;
-    const url = `${this.config.endpoint}/models/${model}:generateContent?key=${apiKey}`;
-
-    const { contents, systemInstruction } = this.convertMessages(messages);
-
-    const requestBody: Record<string, unknown> = {
-      contents,
-      generationConfig: {
-        maxOutputTokens: options?.maxTokens ?? 4096,
-        temperature: options?.temperature ?? 0.7,
-      },
-    };
-
-    if (systemInstruction) {
-      requestBody.systemInstruction = { parts: [{ text: systemInstruction }] };
-    }
-
     try {
-      const response = await this.makeRequest<GeminiResponse>({
+      const model = options?.model || this.config.defaultModel;
+      const body = buildGeminiBody(messages, model, {
+        maxTokens: options?.maxTokens,
+        temperature: options?.temperature,
+      });
+
+      const url = getGeminiGenerateUrl(model, apiKey, this.config.endpoint);
+
+      const json = await this.makeRequest<Record<string, unknown>>({
         url,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(body),
       });
 
-      if (response.error) {
-        return {
-          success: false,
-          content: '',
-          error: response.error.message,
-          errorCode: String(response.error.code),
-        };
+      const result = parseGeminiResponse(json);
+      if (!result.success) {
+        return { success: false, content: '', error: result.error, errorCode: 'API_ERROR' };
       }
-
-      if (!response.candidates || response.candidates.length === 0) {
-        return { success: false, content: '', error: 'No response from model' };
-      }
-
-      const text = response.candidates[0].content.parts
-        .map((p) => p.text)
-        .join('');
 
       return {
         success: true,
-        content: text,
-        tokensUsed: response.usageMetadata
-          ? response.usageMetadata.promptTokenCount + response.usageMetadata.candidatesTokenCount
-          : undefined,
+        content: result.text,
+        tokensUsed: result.usage.totalTokens,
       };
     } catch (error) {
       return this.handleError(error);
     }
-  }
-
-  private convertMessages(messages: AIMessage[]): {
-    contents: { role: string; parts: { text: string }[] }[];
-    systemInstruction: string | null;
-  } {
-    const contents: { role: string; parts: { text: string }[] }[] = [];
-    let systemInstruction: string | null = null;
-
-    for (const msg of messages) {
-      if (msg.role === 'system') {
-        systemInstruction = msg.content;
-      } else {
-        contents.push({
-          role: msg.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: msg.content }],
-        });
-      }
-    }
-
-    return { contents, systemInstruction };
   }
 }
