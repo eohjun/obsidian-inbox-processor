@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-inbox-processor",
-	"version": ".0 2 3.1",
+	"version": "0.2.3",
 	"description": "Obsidian plugin to classify and move Inbox notes with hybrid keyword + LLM folder recommendations",
 	"main": "main.js",
 	"scripts": {
