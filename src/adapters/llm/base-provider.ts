@@ -60,7 +60,7 @@ export const AI_PROVIDERS: Record<AIProviderType, AIProviderConfig> = {
     id: 'openai',
     name: 'OpenAI',
     displayName: 'OpenAI',
-    defaultModel: 'gpt-5-nano',
+    defaultModel: 'gpt-5.4-nano',
     endpoint: 'https://api.openai.com/v1',
   },
 };
