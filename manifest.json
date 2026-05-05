@@ -1,7 +1,7 @@
 {
   "id": "inbox-processor",
   "name": "Inbox Processor",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "minAppVersion": "1.0.0",
   "description": "Classify and move Inbox notes with hybrid keyword + LLM folder recommendations",
   "author": "eohjun",

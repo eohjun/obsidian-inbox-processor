@@ -53,7 +53,7 @@ export const AI_PROVIDERS: Record<AIProviderType, AIProviderConfig> = {
     id: 'gemini',
     name: 'Google Gemini',
     displayName: 'Gemini',
-    defaultModel: 'gemini-2.0-flash',
+    defaultModel: 'gemini-3.1-flash-lite-preview',
     endpoint: 'https://generativelanguage.googleapis.com/v1beta',
   },
   openai: {
